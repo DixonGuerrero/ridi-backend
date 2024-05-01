@@ -1,0 +1,23 @@
+{
+	"name": "ridi-backend",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"cf-typegen": "wrangler types"
+	},
+	"dependencies": {
+		"@cloudflare/itty-router-openapi": "^1.0.1",
+		"@supabase/supabase-js": "^2.42.7",
+		"bcryptjs": "^2.4.3",
+		"jose": "^5.2.4"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20240423.0",
+		"@types/node": "^20.5.7",
+		"@types/service-worker-mock": "^2.0.1",
+		"wrangler": "^3.0.0"
+	}
+}
