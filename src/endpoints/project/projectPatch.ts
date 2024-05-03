@@ -1,5 +1,5 @@
 import { OpenAPIRoute, OpenAPIRouteSchema, Path } from "@cloudflare/itty-router-openapi";
-import { Project } from "../../types";
+import { Project ,DefaultValue } from "../../types";
 import { ProjectService } from "services/project.service";
 
 export class ProjectPatch extends OpenAPIRoute {
@@ -11,14 +11,14 @@ export class ProjectPatch extends OpenAPIRoute {
          description: "Project id",
       }),
    },
-    requestBody: Project ,                                                       
+    requestBody: DefaultValue.Project ,                                                       
     responses: {
       "200": {
         description: "Returns the update task",
         schema: {
           success: Boolean,
           result: {
-            task: Project,
+            task: DefaultValue.Project,
           },
         },
       },

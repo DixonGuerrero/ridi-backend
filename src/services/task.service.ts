@@ -1,4 +1,4 @@
-import { Task } from "types";
+import { Task, TaskAssignment } from "types";
 import { SupabaseConection } from "./supabase.service";
 
 export class TaskService {
@@ -73,5 +73,19 @@ export class TaskService {
     }
 
     return data; // Returns the task if found, otherwise null
+  }
+
+  async assignTask(env: any, dataAssign: TaskAssignment) {
+    const supabase = SupabaseConection.getInstance(env).getConection();
+    const { data, error } = await supabase
+      .from("task_members")
+      .insert([dataAssign]);
+
+    if (error) throw error;
+    return await new Response(JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).json();
   }
 }

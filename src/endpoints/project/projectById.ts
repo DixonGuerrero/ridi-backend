@@ -3,7 +3,7 @@ import {
 	OpenAPIRouteSchema,
 	Path,
 } from "@cloudflare/itty-router-openapi";
-import { Project } from "../../types";
+import { DefaultValue, Project } from "../../types";
 import { ProjectService } from "services/project.service";
 
 export class ProjectById extends OpenAPIRoute {
@@ -21,7 +21,7 @@ export class ProjectById extends OpenAPIRoute {
 				schema: {
 					success: Boolean,
 					result: {
-						task: Project,
+						project: DefaultValue.Project,
 					},
 				},
 			},

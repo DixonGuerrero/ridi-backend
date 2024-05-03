@@ -2,7 +2,7 @@ import {
    OpenAPIRoute,
    OpenAPIRouteSchema,
  } from "@cloudflare/itty-router-openapi";
- import { Login, UserLogin } from "../../types";
+ import { DefaultValue, UserLogin } from "../../types";
  import { UserService } from "services/user.service";
  import { SesionService } from "services/sesion.service";
  import { SignJWT } from 'jose'; // Importamos SignJWT de jose
@@ -11,7 +11,7 @@ import {
    static schema: OpenAPIRouteSchema = {
      tags: ["Sesion"],
      summary: "Create a new Sesion",
-     requestBody: Login,
+     requestBody: DefaultValue.Login,
      responses: {
        "201": {
          description: "Returns the Token for Sesion",

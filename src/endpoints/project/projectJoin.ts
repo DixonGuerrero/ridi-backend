@@ -1,13 +1,13 @@
 import { OpenAPIRoute, OpenAPIRouteSchema } from "@cloudflare/itty-router-openapi";
 import { ProjectService } from "services/project.service";
 import { UserService } from "services/user.service";
-import { ProjectMember, MemberJoinProyect, Project } from "../../types";
+import { ProjectMember, MemberJoinProject ,DefaultValue, Project } from "../../types";
 
 export class JoinProject extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
     tags: ["Projects"],
     summary: "Join a project using an invite code",
-    requestBody: MemberJoinProyect,
+    requestBody: DefaultValue.MemberJoinProject,
     responses: {
       "200": {
         description: "Successfully joined the project",
@@ -42,7 +42,7 @@ export class JoinProject extends OpenAPIRoute {
 
   async handle(request: Request, env: any, context: any, data: Record<string, any>) {
     try {
-      const dataToJoin =  data.body as MemberJoinProyect;
+      const dataToJoin =  data.body as MemberJoinProject;
 
 
       const userService = new UserService();

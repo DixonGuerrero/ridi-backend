@@ -1,5 +1,5 @@
 import { OpenAPIRoute, OpenAPIRouteSchema } from "@cloudflare/itty-router-openapi";
-import { UserSignUp , SignUp } from "../../types";
+import { UserSignUp , DefaultValue } from "../../types";
 import { SesionService } from "../../services/sesion.service";
 import bcrypt from 'bcryptjs';
 import { UserService } from "services/user.service";
@@ -9,7 +9,7 @@ export class SignUpR extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
     tags: ["Sesion"],
     summary: "Create a new Account",
-    requestBody: SignUp,
+    requestBody: DefaultValue.SignUp,
     responses: {
       "201": {
         description: "Returns the created Account",

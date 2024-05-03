@@ -1,5 +1,5 @@
 import { OpenAPIRoute, OpenAPIRouteSchema, Path } from "@cloudflare/itty-router-openapi";
-import { Task } from "../../types";
+import { DefaultValue,Task } from "../../types";
 import { TaskService } from "services/task.service";
 
 export class TaskPatch extends OpenAPIRoute {
@@ -11,14 +11,14 @@ export class TaskPatch extends OpenAPIRoute {
          description: "Task id",
       }),
    },
-    requestBody: Task ,                                                       
+    requestBody: DefaultValue.Task ,                                                       
     responses: {
       "200": {
         description: "Returns the update task",
         schema: {
           success: Boolean,
           result: {
-            task: Task,
+            task: DefaultValue.Task,
           },
         },
       },

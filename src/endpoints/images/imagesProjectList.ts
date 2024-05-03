@@ -4,26 +4,25 @@ import {
 	Path,
 	Query,
 } from "@cloudflare/itty-router-openapi";
-import { TaskService } from "services/task.service";
-import { Task, User } from "../../types";
-import { UserService } from "services/user.service";
+import { Image } from "../../types";
+import { ImagesService } from "services/images.service";
 
-export class UserList extends OpenAPIRoute {
+export class ImagesProjectList extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
-		tags: ["Users"],
-		summary: "List Users",
+		tags: ["Images"],
+		summary: "List Images to Project",
 		responses: {    
 			"200": {
-				description: "Returns a list of Users of the db",
+				description: "Returns a list of images of the project",
 				schema: {
 					success: Boolean,
 					result: {
-						 users: {}
+						 images: {}
 					},
 				},
 			},
 			"404": {
-				description: "Users not found",
+				description: "Images to Project not found",
 				schema: {
 					success: Boolean,
 					error: String,
@@ -41,17 +40,17 @@ export class UserList extends OpenAPIRoute {
 
 
 		// Implement your own object fetch here
-		const userService = new UserService();
-		const tasks = await userService.getUsers(env) as User[];
+		const imagesService = new ImagesService();
+		const images = await imagesService.getImagesProject(env) as Image[];
 
 
 
 		
-		 // Check if tasks are found
-		 if (tasks.length === 0) {
+		 // Check if images are found
+		 if (images.length === 0) {
 			return new Response(JSON.stringify({
 				 success: false,
-				 error: "No users found"
+				 error: "No images found for this project or project not found."
 			}), {
 				 status: 404,
 				 headers: {
@@ -60,10 +59,10 @@ export class UserList extends OpenAPIRoute {
 			});
 	  }
 
-	  // If tasks are found, return them
+	  // If images are found, return them
 	  return new Response(JSON.stringify({
 			success: true,
-			tasks: tasks,
+			images: images,
 	  }), {
 			headers: {
 				 "Content-Type": "application/json"

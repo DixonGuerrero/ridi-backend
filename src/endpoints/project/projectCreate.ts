@@ -1,19 +1,19 @@
 import { OpenAPIRoute, OpenAPIRouteSchema } from "@cloudflare/itty-router-openapi";
-import { Project } from "../../types";
+import { DefaultValue,Project } from "../../types";
 import { ProjectService } from "services/project.service";
 
 export class ProjectCreate extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
     tags: ["Projects"],
     summary: "Create a new Project",
-    requestBody: Project,
+    requestBody: DefaultValue.Project,
     responses: {
       "201": {
         description: "Returns the created project",
         schema: {
           success: Boolean,
           result: {
-            project: Project,
+            project: DefaultValue.Project,
           },
         },
       },

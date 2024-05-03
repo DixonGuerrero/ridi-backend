@@ -1,13 +1,13 @@
 import { OpenAPIRoute, OpenAPIRouteSchema } from "@cloudflare/itty-router-openapi";
 import { MemberService } from "services/member.service";
 import { UserService } from "services/user.service";
-import { ProjectMember } from "types";
+import { ProjectMember , DefaultValue} from "types";
 
 export class MemberRemove extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
     tags: ["Projects"],
     summary: "Remove a member from a project",
-    requestBody: ProjectMember,
+    requestBody: DefaultValue.ProjectMember,
     responses: {
       "200": {
         description: "Member successfully removed from project",

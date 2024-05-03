@@ -19,8 +19,8 @@ node_compat = true
 # Note: Use secrets to store sensitive data.
 # - https://developers.cloudflare.com/workers/configuration/secrets/
 [vars]
-SUPABASE_URL="https://uxvjdvlzkrtskzqcmmif.supabase.co"
-SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV4dmpkdmx6a3J0c2t6cWNtbWlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQyMzUxNDYsImV4cCI6MjAyOTgxMTE0Nn0.eNWTfQDkl0SjJFKXCTuQ0PgxdGH8E-gMjTrsQOrciJY"
+SUPABASE_URL="https://gjcpczwrwrfgfxouxkkg.supabase.co"
+SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqY3Bjendyd3JmZ2Z4b3V4a2tnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ3NTczNTksImV4cCI6MjAzMDMzMzM1OX0.ADloQmf8MDgmsZYUESfqKrigSaHDalfsixzKhIEQoWk"
 SECRET_KEY="31b050193ea5d8f7f6429cbbb07d9fca"
 
 # Bind the Workers AI model catalog. Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network

@@ -1,5 +1,5 @@
 import { OpenAPIRoute, OpenAPIRouteSchema } from "@cloudflare/itty-router-openapi";
-import { User } from "../../types";
+import { DefaultValue,User } from "../../types";
 import { UserService } from "services/user.service";
 
 import bcrypt from "bcryptjs";
@@ -8,7 +8,7 @@ export class UserCreate extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
     tags: ["Users"],
     summary: "Create a new User",
-    requestBody: User,
+    requestBody: DefaultValue.User,
     responses: {
       "201": {
         description: "Returns the created user",

@@ -1,5 +1,5 @@
 import { OpenAPIRoute, OpenAPIRouteSchema, Path } from "@cloudflare/itty-router-openapi";
-import { User } from "../../types";
+import { DefaultValue, User } from "../../types";
 import { UserService } from "services/user.service";
 
 export class UserPatch extends OpenAPIRoute {
@@ -11,14 +11,14 @@ export class UserPatch extends OpenAPIRoute {
          description: "User id",
       }),
    },
-    requestBody: User ,                                                       
+    requestBody: DefaultValue.User ,                                                       
     responses: {
       "200": {
         description: "Returns the update User",
         schema: {
           success: Boolean,
           result: {
-            task: User,
+            task: DefaultValue.User,
           },
         },
       },

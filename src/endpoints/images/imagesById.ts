@@ -5,25 +5,31 @@ import {
 	Query,
 } from "@cloudflare/itty-router-openapi";
 import { TaskService } from "services/task.service";
-import { Task, User } from "../../types";
-import { UserService } from "services/user.service";
+import { Image } from "../../types";
+import { ImagesService } from "services/images.service";
 
-export class UserList extends OpenAPIRoute {
+export class ImagesById extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
-		tags: ["Users"],
-		summary: "List Users",
+		tags: ["Images"],
+		summary: "List Images",
+		parameters: {
+			id: Path(Number, {
+				description: "Filter by images id",
+				required: true,
+			})	
+		},
 		responses: {    
 			"200": {
-				description: "Returns a list of Users of the db",
+				description: "Returns a list of images of the project",
 				schema: {
 					success: Boolean,
 					result: {
-						 users: {}
+						 images: {}
 					},
 				},
 			},
 			"404": {
-				description: "Users not found",
+				description: "Images not found",
 				schema: {
 					success: Boolean,
 					error: String,
@@ -39,19 +45,23 @@ export class UserList extends OpenAPIRoute {
 		data: Record<string, any>
 	) {
 
+		// Retrieve the validated project_id
+		const { id } = data.params;
 
+		console.log(id)
 		// Implement your own object fetch here
-		const userService = new UserService();
-		const tasks = await userService.getUsers(env) as User[];
+      const imagesService = new ImagesService();
+		const image = await imagesService.getImage(env, id) as Image;
 
+		console.log(image)
 
 
 		
-		 // Check if tasks are found
-		 if (tasks.length === 0) {
+		 // Check if images are found
+		 if (!image) {
 			return new Response(JSON.stringify({
 				 success: false,
-				 error: "No users found"
+				 error: "No images found"
 			}), {
 				 status: 404,
 				 headers: {
@@ -60,10 +70,10 @@ export class UserList extends OpenAPIRoute {
 			});
 	  }
 
-	  // If tasks are found, return them
+	  // If images are found, return them
 	  return new Response(JSON.stringify({
 			success: true,
-			tasks: tasks,
+			images: image,
 	  }), {
 			headers: {
 				 "Content-Type": "application/json"
