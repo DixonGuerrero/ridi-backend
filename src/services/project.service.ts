@@ -4,18 +4,40 @@ import { SupabaseConection } from "./supabase.service";
 export class ProjectService {
   async getProjectByIdUser(env: any, id: number): Promise<Project[]> {
     const supabase = SupabaseConection.getInstance(env).getConection();
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from("project_members")
       .select("project_id")
       .eq("user_id", id);
+  
     if (error) throw error;
-
-    return await new Response(JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).json();
+    return data as Project[];
   }
+
+  async getLastProjectByUser(env: any, userId: number): Promise<Project> {
+    const supabase = SupabaseConection.getInstance(env).getConection();
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("created_by", userId)
+      .order("project_id", { ascending: false }) // Asumiendo que 'id' es autoincremental
+      .limit(1);
+
+    if (error) throw error;
+    return data[0]; // Retorna el último proyecto creado por el usuario
+}
+
+  
+  async getProjectByCreatedId(env: any, id: number): Promise<Project[]> {
+    const supabase = SupabaseConection.getInstance(env).getConection();
+    let { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("created_by", id);
+  
+    if (error) throw error;
+    return data as Project[];
+  }
+  
 
   async getProjectById(env: any, id: number): Promise<Project> {
     const supabase = SupabaseConection.getInstance(env).getConection();
@@ -32,17 +54,37 @@ export class ProjectService {
     }).json();
   }
 
-  async createProject(env: any, project: Project) {
+  async createProject(env: any, project: Project, userId: number) {
     const supabase = SupabaseConection.getInstance(env).getConection();
-    const { data, error } = await supabase.from("projects").insert([project]);
+  
+    // Agregar código para generar invite_code
+    project.invite_code = await this.generateCode();
 
-    if (error) throw error;
-    return await new Response(JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).json();
+  
+    // Crear proyecto
+    let { data: createdProjectData, error: createProjectError } = await supabase.from("projects").insert([project]);
+    if (createProjectError) throw createProjectError;
+
+  
+    // Obtener el último proyecto creado por el usuario
+    const lastProject = await this.getLastProjectByUser(env, userId);
+    if (!lastProject) throw new Error("No project found after creation.");
+
+
+  
+    // Crear registro en project_members
+    const projectMember = {
+      project_id: lastProject.project_id,
+      user_id: userId
+    };
+
+  
+    const { error: memberError } = await supabase.from("project_members").insert([projectMember]);
+    if (memberError) throw memberError;
+  
+    return lastProject; // Retorna el proyecto con la confirmación de que el miembro fue agregado
   }
+  
 
   async updateProject(env: any, projectData: Project, id: number) {
     const supabase = SupabaseConection.getInstance(env).getConection();

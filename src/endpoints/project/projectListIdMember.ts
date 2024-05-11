@@ -102,11 +102,11 @@ export class ProjectListIdMember extends OpenAPIRoute {
 
      console.log(projects)
 
-     // En un array vamos a devolver los proyectos, entonces vamos a iterar el array de proyectos el cual contiene los id de los proyectos y vamos a consultarlos a la db y vamos a devolver un array de proyectos
 
-       const  listProjects = await Promise.all(projects.map(async (project) => {
-            return await projectService.getProjectById(env, project.project_id);
-          })) as Project[];
+  const listProjectsNested = await Promise.all(projects.map(async (project) => {
+	return await projectService.getProjectById(env, project.project_id);
+ }));
+ const listProjects = listProjectsNested.flat() as Project[];
 	  // If tasks are found, return them
 	  return new Response(JSON.stringify({
 			success: true,

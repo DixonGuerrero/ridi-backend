@@ -12,9 +12,7 @@ export class TaskCreate extends OpenAPIRoute {
         description: "Returns the created task",
         schema: {
           success: Boolean,
-          result: {
             task: DefaultValue.Task,
-          },
         },
       },
     },
@@ -44,7 +42,8 @@ export class TaskCreate extends OpenAPIRoute {
       // Successful response
       return new Response(JSON.stringify({ success: true, result: "OK" }), {
         headers: { "Content-Type": "application/json" },
-        status: 201
+        status: 201,
+       
       });
     } catch (error) {
       // Error response

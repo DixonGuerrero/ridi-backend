@@ -21,6 +21,7 @@ export const DefaultValue = {
     name: new Str({ example: "lorem" }),
     description: new Str({ example: "lorem" }),
     due_date: DateTime,
+    image: new Num({ example: 1, required: false }),
     created_by: new Num({ example: 1 }),
   },
   MemberJoinProject: {

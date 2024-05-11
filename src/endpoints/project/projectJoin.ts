@@ -43,8 +43,6 @@ export class JoinProject extends OpenAPIRoute {
   async handle(request: Request, env: any, context: any, data: Record<string, any>) {
     try {
       const dataToJoin =  data.body as MemberJoinProject;
-
-
       const userService = new UserService();
       const projectService = new ProjectService();
 

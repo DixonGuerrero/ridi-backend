@@ -3,30 +3,30 @@ import {
 	OpenAPIRouteSchema,
 	Path,
 } from "@cloudflare/itty-router-openapi";
-import { DefaultValue, Project } from "../../types";
-import { ProjectService } from "services/project.service";
+import { User } from "../../types";
+import { UserService } from "services/user.service";
 
-export class ProjectById extends OpenAPIRoute {
+export class UserByEmail extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
-		tags: ["Projects"],
-		summary: "Get a single Project by id",
+		tags: ["Users"],
+		summary: "Get a single User by Email",
 		parameters: {
-			id: Path(Number, {
-				description: "Project id",
+			email: Path(String, {
+				description: "user email",
 			}),
 		},
 		responses: {
 			"200": {
-				description: "Returns a single task if found",
+				description: "Returns a single user if found",
 				schema: {
 					success: Boolean,
 					result: {
-						project: DefaultValue.Project,
+						user: {},
 					},
 				},
 			},
 			"404": {
-				description: "Project not found",
+				description: "User not found",
 				schema: {
 					success: Boolean,
 					error: String,
@@ -42,17 +42,17 @@ export class ProjectById extends OpenAPIRoute {
 		data: Record<string, any>
 	) {
 		// Retrieve the validated slug
-		const { id } = data.params;
+		const { email } = data.params;
 
 		// Implement your own object fetch here
-		const projectService = new ProjectService();
-		const project = await projectService.getProjectById(env, id) as Project;
+		const userService = new UserService();
+		const user = await userService.getUserByEmail(env, email) as User;
 
-		// Check if project is found
-		if (!project) {
+		// Check if user is found
+		if (!user) {
 			return new Response(JSON.stringify({
 				success: false,
-				error: "Project not found",
+				error: "User not found",
 			}), {
 				status: 404,
 				headers: {
@@ -65,7 +65,7 @@ export class ProjectById extends OpenAPIRoute {
 
 		return new Response(JSON.stringify({
 			success: true,
-			project,
+			 user ,
 		}), {
 			headers: {
 				"Content-Type": "application/json",

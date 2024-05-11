@@ -44,7 +44,7 @@ import {
              success: false,
              message: "User not found",
            }),
-           { status: 404 }
+           { status: 400 }
          );
        }
  
@@ -74,9 +74,9 @@ import {
  
        // Successful response
        return new Response(
-         JSON.stringify({ success: true, token }),
+         JSON.stringify({ success: true, token , email: user.email}),
          {
-           headers: { "Content-Type": "application/json" },
+           headers: { "Content-Type": "appnlication/json" },
            status: 200,  // Using 201 as the token is being created successfully
          }
        );

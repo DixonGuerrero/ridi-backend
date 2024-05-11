@@ -2,7 +2,7 @@ import { SupabaseClient, createClient } from "@supabase/supabase-js";
 
 export class SupabaseConection {
   private static instance: SupabaseConection;
-  
+
   supabase: SupabaseClient<any, "public", any>;
   private constructor(env:any) {
     // Inicializar el Singleton

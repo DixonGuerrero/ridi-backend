@@ -88,4 +88,36 @@ export class TaskService {
       },
     }).json();
   }
+
+  async getTaskByIdUser(env: any, id: number): Promise<[]> {
+    const supabase = SupabaseConection.getInstance(env).getConection();
+    const { data, error } = await supabase
+      .from("task_assignments")
+      .select("task_id")
+      .eq("user_id", id);
+    if (error) throw error;
+    console.log(data,id);
+
+    return await new Response(JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).json();
+  }
+
+  async getTaskByIdUserAssign(env: any, id: number): Promise<[]> {
+    const supabase = SupabaseConection.getInstance(env).getConection();
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*")
+      .eq("assigned_user_id", id);
+    if (error) throw error;
+    console.log(data,id);
+
+    return await new Response(JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).json();
+  }
 }

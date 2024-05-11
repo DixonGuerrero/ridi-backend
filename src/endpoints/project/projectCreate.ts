@@ -42,7 +42,7 @@ export class ProjectCreate extends OpenAPIRoute {
       //Vamos a crear el invite_code 
       projectToCreate.invite_code =  await projectService.generateCode();
 
-      const createdTask = await projectService.createProject(env, projectToCreate);
+      const createdTask = await projectService.createProject(env, projectToCreate, projectToCreate.created_by);
 
       // Successful response
       return new Response(JSON.stringify({ success: true, result: "OK" }), {
